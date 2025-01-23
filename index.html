@@ -7,7 +7,7 @@
     <style>
       h1 {
         font-weight: bold;
-        text-shadow: -2px 0 black,2px 0 black,0 2px black,0 -2px black;
+        text-shadow: -2px 0 black, 2px 0 black, 0 2px black, 0 -2px black;
         text-align: center;
         font-size: 60px;
         animation: tbu 6s infinite ease-in-out;
@@ -32,23 +32,28 @@
       }
 
       body {
-        background-image: url("003.png");
+        background-image: url("003.png"); /* Đường dẫn tới hình nền */
+        background-size: cover;          /* Đảm bảo hình nền phủ đầy màn hình */
+        background-position: center;     /* Căn giữa hình nền */
+        background-repeat: no-repeat;    /* Không lặp lại hình nền */
         font-family: Arial, sans-serif;
         margin: 20px;
       }
 
-      input,button {
-        background-color: black; 
-        color: white; 
+      input,
+      button {
+        background-color: black;
+        color: white;
         border: 1px solid white;
-        border-radius: 5px; 
+        border-radius: 5px;
         padding: 10px;
       }
+
       body *:not(h1) {
         font-size: 20px;
         color: white;
         font-weight: bold;
-        text-shadow: -2px 0 black,2px 0 black,0 2px black,0 -2px black;
+        text-shadow: -2px 0 black, 2px 0 black, 0 2px black, 0 -2px black;
       }
     </style>
   </head>
@@ -57,44 +62,15 @@
 
     <div>
       <label for="startHour">Giờ:</label>
-      <input
-        type="number"
-        id="startHour"
-        min="0"
-        max="23"
-        placeholder="Giờ (0-23)"
-      />
+      <input type="number" id="startHour" min="0" max="23" placeholder="Giờ (0-23)" />
       <label for="startMinute">Phút:</label>
-      <input
-        type="number"
-        id="startMinute"
-        min="0"
-        max="59"
-        placeholder="Phút (0-59)"
-      />
+      <input type="number" id="startMinute" min="0" max="59" placeholder="Phút (0-59)" />
       <label for="startDay">Ngày:</label>
-      <input
-        type="number"
-        id="startDay"
-        min="1"
-        max="31"
-        placeholder="Ngày (1-31)"
-      />
+      <input type="number" id="startDay" min="1" max="31" placeholder="Ngày (1-31)" />
       <label for="startMonth">Tháng:</label>
-      <input
-        type="number"
-        id="startMonth"
-        min="1"
-        max="12"
-        placeholder="Tháng (1-12)"
-      />
+      <input type="number" id="startMonth" min="1" max="12" placeholder="Tháng (1-12)" />
       <label for="startYear">Năm:</label>
-      <input
-        type="number"
-        id="startYear"
-        min="1970"
-        placeholder="Năm (1970+)"
-      />
+      <input type="number" id="startYear" min="1970" placeholder="Năm (1970+)" />
       <button onclick="saveAndStart()">Lưu & Bắt đầu</button>
     </div>
 
