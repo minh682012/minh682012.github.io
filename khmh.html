@@ -1,24 +1,135 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
-    <img src="https://i.pinimg.com/564x/4f/33/a0/4f33a0124e75f4c7d6ce340b0b5e410d.jpg">
-</body>
-<style type="text/css">
-    body {
-        perspective: 1000px;
-    }
-    img {
-        width: 300px;
-        display: block;
-        margin: auto;
-        margin-top: 200px;
-        transition: transform 1s;
-    }
-    b:hover { color: rgb(108, 248, 255);
-      transform: rotate(-1turn);
-    }
-</style>
+<!DOCTYPE html>  
+<html lang="vi">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Hành trình tình yêu</title>  
+    <style>
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            animation: tbu 6s infinite ease-in-out;
+        }
+
+        @keyframes tbu {
+            0% { color: #FFFFFF; }
+            25% { color: #FFB3C6; }
+            50% { color: #FF6699; }
+            75% { color: #FFB3C6; }
+            100% { color: #FFFFFF; }
+        }
+
+        body {  
+            font-family: Arial, sans-serif;  
+            margin: 20px;  
+        }  
+
+        input, button {  
+            margin: 5px;  
+            padding: 10px;  
+        }  
+    </style>  
+</head>  
+<body>  
+    <h1>Hành trình tình yêu</h1>  
+    
+    <div>  
+        <label for="startHour">Giờ:</label>  
+        <input type="number" id="startHour" min="0" max="23" placeholder="Giờ (0-23)">  
+        <label for="startMinute">Phút:</label>  
+        <input type="number" id="startMinute" min="0" max="59" placeholder="Phút (0-59)">  
+        <label for="startDay">Ngày:</label>  
+        <input type="number" id="startDay" min="1" max="31" placeholder="Ngày (1-31)">  
+        <label for="startMonth">Tháng:</label>  
+        <input type="number" id="startMonth" min="1" max="12" placeholder="Tháng (1-12)">  
+        <label for="startYear">Năm:</label>  
+        <input type="number" id="startYear" min="1970" placeholder="Năm (1970+)">  
+        <button onclick="saveAndStart()">Lưu & Bắt đầu</button>  
+    </div>  
+    
+    <div id="daysCount"></div>  
+    <div id="detailedCount"></div>  
+    <div id="hmsCount"></div>  
+    
+    <script>
+        function saveAndStart() {
+            const hour = parseInt(document.getElementById('startHour').value);
+            const minute = parseInt(document.getElementById('startMinute').value);
+            const day = parseInt(document.getElementById('startDay').value);
+            const month = parseInt(document.getElementById('startMonth').value) - 1; // Tháng bắt đầu từ 0
+            const year = parseInt(document.getElementById('startYear').value);
+
+            if (isNaN(hour) || isNaN(minute) || isNaN(day) || isNaN(month) || isNaN(year)) {
+                alert("Vui lòng nhập đầy đủ và đúng định dạng thời gian!");
+                return;
+            }
+
+            // Tạo đối tượng ngày bắt đầu
+            const startDate = new Date(year, month, day, hour, minute).getTime();
+            localStorage.setItem('startDate', startDate);
+
+            // Hiển thị lại các giá trị đã nhập
+            displayInputs(hour, minute, day, month + 1, year);
+
+            // Bắt đầu đếm thời gian
+            startTimer();
+        }
+
+        function startTimer() {
+            setInterval(updateDisplay, 1000);
+        }
+
+        function updateDisplay() {
+            const storedStartDate = localStorage.getItem('startDate');
+            if (!storedStartDate) return;
+
+            const startDate = Number(storedStartDate);
+            const currentDate = new Date().getTime();
+            const timeDiff = currentDate - startDate;
+
+            const diffDays = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+            const diffWeeks = Math.floor(diffDays / 7);
+            const diffMonths = Math.floor(diffDays / 30);
+            const diffYears = Math.floor(diffDays / 360);
+
+            const remainingDays = diffDays % 30;
+            const remainingWeeks = diffWeeks % 4;
+
+            const diffHours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const diffMinutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+            const diffSeconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+            document.getElementById('daysCount').innerHTML = `Số ngày đã trôi qua: ${diffDays}`;
+            document.getElementById('detailedCount').innerHTML = `
+                Thời gian chi tiết: ${diffYears} năm, ${diffMonths % 12} tháng, ${remainingWeeks} tuần, ${remainingDays} ngày
+            `;
+            document.getElementById('hmsCount').innerHTML = `
+                Đếm giờ: ${diffHours} giờ ${diffMinutes} phút ${diffSeconds} giây
+            `;
+        }
+
+        function displayInputs(hour, minute, day, month, year) {
+            document.getElementById('startHour').value = hour;
+            document.getElementById('startMinute').value = minute;
+            document.getElementById('startDay').value = day;
+            document.getElementById('startMonth').value = month;
+            document.getElementById('startYear').value = year;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const storedStartDate = localStorage.getItem('startDate');
+            if (storedStartDate) {
+                const startDate = new Date(Number(storedStartDate));
+                displayInputs(
+                    startDate.getHours(),
+                    startDate.getMinutes(),
+                    startDate.getDate(),
+                    startDate.getMonth() + 1,
+                    startDate.getFullYear()
+                );
+                startTimer();
+            }
+        });
+    </script>  
+</body>  
 </html>
