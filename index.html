@@ -80,7 +80,7 @@
     <div id="hmsCount"></div>  
 
     <script>  
-      const defaultDate = new Date(2025, 1, 22, 11, 15);  
+      const defaultDate = new Date(2025, 3, 10 ,9 ,30 );  
 
       function saveAndStart() {  
         const hour = parseInt(document.getElementById("startHour").value);  
@@ -115,15 +115,19 @@
 
         const diffDays = Math.floor(timeDiff / (1000 * 60 * 60 * 24));  
         const diffWeeks = Math.floor(diffDays / 7);  
+        const diffMonths = Math.floor(diffDays / 30);
+        const diffYears = Math.floor(diffDays / 360);
         const remainingDays = diffDays % 7;  
 
         const diffHours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));  
         const diffMinutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));  
         const diffSeconds = Math.floor((timeDiff % (1000 * 60)) / 1000);  
 
-        // Hiển thị thời gian chi tiết  
+        // Hiển thị thời gian chi tiết  +   
         document.getElementById("detailedCount").innerHTML = `  
-          timemain: ${diffWeeks} tuần, ${remainingDays} ngày  
+          timemain: ${diffYears} năm, ${
+          diffMonths % 12
+        } tháng,${diffWeeks} tuần, ${remainingDays} ngày  
         `;  
         document.getElementById("hmsCount").innerHTML = `  
           detail: ${diffHours} giờ ${diffMinutes} phút ${diffSeconds} giây  
