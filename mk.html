@@ -1,22 +1,170 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ví Dụ CSS</title>
-    <style>
-        input,
-        button {
-            background-color: black; 
-            color: white; 
-            border: 1px solid white;
-            border-radius: 5px; 
-            padding: 10px;
-        }
-    </style>
-</head>
-<body>
-    <input type="text" placeholder="Nhập văn bản...">
-    <button>Gửi</button>
-</body>
+<!DOCTYPE html>  
+<html lang="vi">  
+  <head>  
+    <meta charset="UTF-8" />  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />  
+    <title>Hành trình tình yêu ❤️</title>  
+    <style>  
+      h1 {  
+        font-weight: bold;  
+        text-align: center;  
+        font-size: 60px;  
+        animation: tbu 6s infinite ease-in-out;  
+        text-shadow: -1px 0 black, 1px 0 black, 0 1px black, 0 -1px black;  
+      }  
+
+      @keyframes tbu {  
+        0% { color: #ffffff; }  
+        25% { color: #ffb3c6; }  
+        50% { color: #ff6699; }  
+        75% { color: #ffb3c6; }  
+        100% { color: #ffffff; }  
+      }  
+
+      body {  
+        background-image: url("004.jpg");  
+        background-size: cover;  
+        background-position: center;  
+        background-repeat: no-repeat;  
+        width: 100vw;  
+        height: 100vh;  
+        margin: 0;  
+        padding: 0;  
+      }  
+
+      input {  
+        width: 100px;  
+        background-color: black;  
+        color: white;  
+        border: 1px solid white;  
+        border-radius: 5px;  
+        padding: 10px;  
+      }  
+      
+      button {  
+        width: 250px;  
+        background-color: black;  
+        color: white;  
+        border: 1px solid white;  
+        border-radius: 5px;  
+        padding: 10px;  
+      }  
+      
+      body *:not(h1) {  
+        font-size: 30px;  
+        color: white;  
+        font-weight: bold;  
+        text-shadow: -1px 0 black, 1px 0 black, 0 1px black, 0 -1px black;  
+      }  
+    </style>  
+  </head>  
+  <body>  
+    <h1>Hành trình tình yêu ❤️</h1>  
+
+    <div>  
+      <label for="startHour">Giờ:</label>  
+      <input type="number" id="startHour" min="0" max="23" />  
+      <label for="startMinute">Phút:</label>  
+      <input type="number" id="startMinute" min="0" max="59" />  
+      <label for="startDay">Ngày:</label>  
+      <input type="number" id="startDay" min="1" max="31" />  
+      <label for="startMonth">Tháng:</label>  
+      <input type="number" id="startMonth" min="1" max="12" />  
+      <label for="startYear">Năm:</label>  
+      <input type="number" id="startYear" min="1970" />  
+      <button onclick="saveAndStart()">Lưu & Bắt đầu</button>  
+    </div>  
+
+    <div id="daysCount"></div>  
+    <div id="detailedCount"></div>  
+    <div id="hmsCount"></div>  
+
+    <script>  
+      const defaultDate = new Date(2025, 3, 10 ,9 ,30 );  
+
+      function saveAndStart() {  
+        const hour = parseInt(document.getElementById("startHour").value);  
+        const minute = parseInt(document.getElementById("startMinute").value);  
+        const day = parseInt(document.getElementById("startDay").value);  
+        const month = parseInt(document.getElementById("startMonth").value) - 1;  
+        const year = parseInt(document.getElementById("startYear").value);  
+
+        if (isNaN(hour) || isNaN(minute) || isNaN(day) || isNaN(month) || isNaN(year)) {
+alert("Vui lòng nhập đầy đủ và đúng định dạng thời gian!");  
+          return;  
+        }  
+
+        const startDate = new Date(year, month, day, hour, minute).getTime();  
+        localStorage.setItem("startDate", startDate);  
+
+        displayInputs(hour, minute, day, month + 1, year);  
+        startTimer();  
+      }  
+
+      function startTimer() {  
+        setInterval(updateDisplay, 1000);  
+      }  
+
+      function updateDisplay() {  
+        const storedStartDate = localStorage.getItem("startDate");  
+        if (!storedStartDate) return;  
+
+        const startDate = Number(storedStartDate);  
+        const currentDate = new Date().getTime();  
+        const timeDiff = currentDate - startDate;  
+
+        const diffDays = Math.floor(timeDiff / (1000 * 60 * 60 * 24));  
+        const diffWeeks = Math.floor(diffDays / 7);  
+        const diffMonths = Math.floor(diffDays / 30);
+        const diffYears = Math.floor(diffDays / 360);
+        const remainingDays = diffDays % 7;  
+
+        const diffHours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));  
+        const diffMinutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));  
+        const diffSeconds = Math.floor((timeDiff % (1000 * 60)) / 1000);  
+
+        // Hiển thị thời gian chi tiết  +   
+        document.getElementById("detailedCount").innerHTML = `  
+          timemain: ${diffYears} năm, ${
+          diffMonths % 12
+        } tháng, ${diffWeeks} tuần, ${remainingDays} ngày  
+        `;  
+        document.getElementById("hmsCount").innerHTML = `  
+          detail: ${diffHours} giờ ${diffMinutes} phút ${diffSeconds} giây  
+        `;  
+        document.getElementById("daysCount").innerHTML = `Days: ${diffDays} ngày`; 
+      }  
+
+      function displayInputs(hour, minute, day, month, year) {  
+        document.getElementById("startHour").value = hour;  
+        document.getElementById("startMinute").value = minute;  
+        document.getElementById("startDay").value = day;  
+        document.getElementById("startMonth").value = month;  
+        document.getElementById("startYear").value = year;  
+      }  
+
+      document.addEventListener("DOMContentLoaded", () => {  
+        const storedStartDate = localStorage.getItem("startDate");  
+        if (storedStartDate) {  
+          const startDate = new Date(Number(storedStartDate));  
+          displayInputs(  
+            startDate.getHours(),  
+            startDate.getMinutes(),  
+            startDate.getDate(),  
+            startDate.getMonth() + 1,  
+            startDate.getFullYear()  
+          );  
+          startTimer();  
+        } else {  
+          displayInputs(  
+            defaultDate.getHours(),  
+            defaultDate.getMinutes(),  
+            defaultDate.getDate(),  
+            defaultDate.getMonth() + 1,  
+            defaultDate.getFullYear()  
+          );  
+        }  
+      });  
+    </script>  
+  </body>  
 </html>
