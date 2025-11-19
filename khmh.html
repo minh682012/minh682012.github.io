@@ -1,55 +1,51 @@
 <!DOCTYPE html>
 <html lang="vi">
   <head>
+    <link rel="icon" href="â.png" type="image/png" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hành trình tình yêu ❤️</title>
+    <title>Nhật kí thay đổi ăn tếtttt 🔥</title>
     <style>
+      .um {
+        height: 575px;
+        width: 49.5%;
+      }
+      .um2 {
+        height: 1010px;
+        width: 49.5%;
+      }
+
       h1 {
         font-weight: bold;
         text-align: center;
         font-size: 60px;
         animation: tbu 6s infinite ease-in-out;
-        color: white; /* Màu chữ */
-        text-shadow: 
-          1px 1px 0 black, /* Phải dưới */
-          -1px -1px 0 black, /* Trái trên */
-          1px -1px 0 black, /* Phải trên */
-          -1px 1px 0 black, /* Trái dưới */
-          1px 1px 0 black, /* Mịn hơn */
-          -1px -1px 0 black;
+        text-shadow: -1px 0 black, 1px 0 black, 0 1px black, 0 -1px black;
       }
 
       @keyframes tbu {
         0% {
-          color: #ffffff;
+          color: hwb(0 24% 0%);
         }
         25% {
-          color: #ffb3c6;
+          color: #ffdf40;
         }
         50% {
-          color: #ff6699;
+          color: #8aff66;
         }
         75% {
-          color: #ffb3c6;
+          color: #53d4ff;
         }
         100% {
           color: #ffffff;
         }
       }
-
-      body {
-        background-image: url("003.png");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        width: 100vw;
-        height: 100vh;
-        margin: 0;
-        padding: 0;
+      .myDiv {
+        border: 4mm outset rgb(160, 233, 255);
+        background-color: rgb(137, 207, 242);
+        text-align: center;
       }
-
-      input{
+      input {
         width: 100px;
         background-color: black;
         color: white;
@@ -57,7 +53,21 @@
         border-radius: 5px;
         padding: 10px;
       }
-      button{
+      p.m {
+        border-style: dotted;
+        background-color: rgb(255, 175, 63);
+      }
+      body {
+        background-color: #00203fff;
+        background-size: cover;
+        background-position: center;
+
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+      }
+      button {
         width: 250px;
         background-color: black;
         color: white;
@@ -68,132 +78,55 @@
 
       body *:not(h1) {
         font-size: 30px;
-        color: white;
+        color: #adefd1ff;
         font-weight: bold;
         text-shadow: -1px 0 black, 1px 0 black, 0 1px black, 0 -1px black;
+      }
+      .hm {
+        font-weight: bold;
+        font-size: 45px;
+        animation: lvm 6s infinite ease-in-out;
+        text-shadow: -1px 0 black, 1px 0 black, 0 1px black, 0 -1px black;
+      }
+
+      @keyframes lvm {
+        0% {
+          color: hwb(0 38% 0%);
+        }
+        25% {
+          color: #ffc340;
+        }
+        50% {
+          color: #fad954;
+        }
+        75% {
+          color: #ffff53;
+        }
+        100% {
+          color: #ff5050;
+        }
       }
     </style>
   </head>
   <body>
-    <h1>Hành trình tình yêu ❤️</h1>
-
-    <div>
-      <label for="startHour">Giờ:</label>
-      <input type="number" id="startHour" min="0" max="23" />
-      <label for="startMinute">Phút:</label>
-      <input type="number" id="startMinute" min="0" max="59" />
-      <label for="startDay">Ngày:</label>
-      <input type="number" id="startDay" min="1" max="31" />
-      <label for="startMonth">Tháng:</label>
-      <input type="number" id="startMonth" min="1" max="12" />
-      <label for="startYear">Năm:</label>
-      <input type="number" id="startYear" min="1970" />
-      <button onclick="saveAndStart()">Lưu & Bắt đầu</button>
+    <div class="myDiv">
+      <header>
+        <h1>Nhật kí thay đổi ăn tếtttt 🔥</h1>
+      </header>
+</div>
+    <div class="hm">•19/11</div>
+    <blockquote>
+      <h2>
+       Tính ra là tập đc cx gần 1 tháng r mà lười ghi lại nên thoi quyết định lấy hnay làm ngày bắt đầu
+       nay thì tôi tập cx đc
+       35 hít đất
+       30 gập bụng
+       30 nâng tạ
+       coi như ngày đầu v th ngủ 11h30
+      </h2>
+    </blockquote>
+    <div style="text-align: left">
+      <img src="1911.jpg" alt="river" style="max-width: 50%" />
     </div>
-
-    <div id="daysCount"></div>
-    <div id="detailedCount"></div>
-    <div id="hmsCount"></div>
-
-    <script>
-      const defaultDate = new Date(2025, 1, 22, 11, 15);
-
-      function saveAndStart() {
-        const hour = parseInt(document.getElementById("startHour").value);
-        const minute = parseInt(document.getElementById("startMinute").value);
-        const day = parseInt(document.getElementById("startDay").value);
-        const month = parseInt(document.getElementById("startMonth").value) - 1;
-        const year = parseInt(document.getElementById("startYear").value);
-
-        if (
-          isNaN(hour) ||
-          isNaN(minute) ||
-          isNaN(day) ||
-          isNaN(month) ||
-          isNaN(year)
-        ) {
-          alert("Vui lòng nhập đầy đủ và đúng định dạng thời gian!");
-          return;
-        }
-
-        const startDate = new Date(year, month, day, hour, minute).getTime();
-        localStorage.setItem("startDate", startDate);
-
-        displayInputs(hour, minute, day, month + 1, year);
-        startTimer();
-      }
-
-      function startTimer() {
-        setInterval(updateDisplay, 1000);
-      }
-
-      function updateDisplay() {
-        const storedStartDate = localStorage.getItem("startDate");
-        if (!storedStartDate) return;
-
-        const startDate = Number(storedStartDate);
-        const currentDate = new Date().getTime();
-        const timeDiff = currentDate - startDate;
-
-        const diffDays = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-        const diffWeeks = Math.floor(diffDays / 7);
-        const diffMonths = Math.floor(diffDays / 30);
-        const diffYears = Math.floor(diffDays / 360);
-
-        const remainingDays = diffDays % 30;
-        const remainingWeeks = diffWeeks % 4;
-
-        const diffHours = Math.floor(
-          (timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-        );
-        const diffMinutes = Math.floor(
-          (timeDiff % (1000 * 60 * 60)) / (1000 * 60)
-        );
-        const diffSeconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
-
-        document.getElementById(
-          "daysCount"
-        ).innerHTML = `Số ngày đã trôi qua: ${diffDays}`;
-        document.getElementById("detailedCount").innerHTML = `
-                Thời gian chi tiết: ${diffYears} năm, ${
-          diffMonths % 12
-        } tháng, ${remainingWeeks} tuần, ${remainingDays} ngày
-            `;
-        document.getElementById("hmsCount").innerHTML = `
-                Đếm giờ: ${diffHours} giờ ${diffMinutes} phút ${diffSeconds} giây
-            `;
-      }
-
-      function displayInputs(hour, minute, day, month, year) {
-        document.getElementById("startHour").value = hour;
-        document.getElementById("startMinute").value = minute;
-        document.getElementById("startDay").value = day;
-        document.getElementById("startMonth").value = month;
-        document.getElementById("startYear").value = year;
-      }
-
-      document.addEventListener("DOMContentLoaded", () => {
-        const storedStartDate = localStorage.getItem("startDate");
-        if (storedStartDate) {
-          const startDate = new Date(Number(storedStartDate));
-          displayInputs(
-            startDate.getHours(),
-            startDate.getMinutes(),
-            startDate.getDate(),
-            startDate.getMonth() + 1,
-            startDate.getFullYear()
-          );
-          startTimer();
-        } else {
-          displayInputs(
-            defaultDate.getHours(),
-            defaultDate.getMinutes(),
-            defaultDate.getDate(),
-            defaultDate.getMonth() + 1,
-            defaultDate.getFullYear()
-          );
-        }
-      });
-    </script>
   </body>
 </html>

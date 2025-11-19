@@ -1,170 +1,111 @@
-<!DOCTYPE html>  
-<html lang="vi">  
-  <head>  
-    <meta charset="UTF-8" />  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />  
-    <title>Hành trình tình yêu ❤️</title>  
-    <style>  
-      h1 {  
-        font-weight: bold;  
-        text-align: center;  
-        font-size: 60px;  
-        animation: tbu 6s infinite ease-in-out;  
-        text-shadow: -1px 0 black, 1px 0 black, 0 1px black, 0 -1px black;  
-      }  
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Love Meter</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #ffe6e6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+    }
 
-      @keyframes tbu {  
-        0% { color: #ffffff; }  
-        25% { color: #ffb3c6; }  
-        50% { color: #ff6699; }  
-        75% { color: #ffb3c6; }  
-        100% { color: #ffffff; }  
-      }  
+    .heart-container {
+      position: relative;
+      width: 250px;
+      height: 225px;
+    }
 
-      body {  
-        background-image: url("004.jpg");  
-        background-size: cover;  
-        background-position: center;  
-        background-repeat: no-repeat;  
-        width: 100vw;  
-        height: 100vh;  
-        margin: 0;  
-        padding: 0;  
-      }  
+    svg {
+      width: 100%;
+      height: 100%;
+    }
 
-      input {  
-        width: 100px;  
-        background-color: black;  
-        color: white;  
-        border: 1px solid white;  
-        border-radius: 5px;  
-        padding: 10px;  
-      }  
-      
-      button {  
-        width: 250px;  
-        background-color: black;  
-        color: white;  
-        border: 1px solid white;  
-        border-radius: 5px;  
-        padding: 10px;  
-      }  
-      
-      body *:not(h1) {  
-        font-size: 30px;  
-        color: white;  
-        font-weight: bold;  
-        text-shadow: -1px 0 black, 1px 0 black, 0 1px black, 0 -1px black;  
-      }  
-    </style>  
-  </head>  
-  <body>  
-    <h1>Hành trình tình yêu ❤️</h1>  
+    .water, .water2 {
+      fill: #ff4d6d;
+      opacity: 0.8;
+      animation: wave 4s linear infinite;
+    }
+    .water2 {
+      opacity: 0.5;
+      animation-duration: 6s;
+    }
 
-    <div>  
-      <label for="startHour">Giờ:</label>  
-      <input type="number" id="startHour" min="0" max="23" />  
-      <label for="startMinute">Phút:</label>  
-      <input type="number" id="startMinute" min="0" max="59" />  
-      <label for="startDay">Ngày:</label>  
-      <input type="number" id="startDay" min="1" max="31" />  
-      <label for="startMonth">Tháng:</label>  
-      <input type="number" id="startMonth" min="1" max="12" />  
-      <label for="startYear">Năm:</label>  
-      <input type="number" id="startYear" min="1970" />  
-      <button onclick="saveAndStart()">Lưu & Bắt đầu</button>  
-    </div>  
+    @keyframes wave {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-160px); }
+    }
 
-    <div id="daysCount"></div>  
-    <div id="detailedCount"></div>  
-    <div id="hmsCount"></div>  
+    .percent-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2.2em;
+      font-weight: bold;
+      color: white;
+      text-shadow: 1px 1px 6px rgba(0,0,0,0.7);
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="heart-container">
+    <svg viewBox="0 0 300 270">
+      <!-- Viền trái tim -->
+      <path d="M150 250 L50 150 
+            A50 50 0 1 1 150 80 
+            A50 50 0 1 1 250 150 Z"
+            stroke="red" stroke-width="4" fill="none"/>
 
-    <script>  
-      const defaultDate = new Date(2025, 3, 10 ,9 ,30 );  
+      <!-- Mặt nạ trái tim (mask) -->
+      <clipPath id="clipHeart">
+        <path d="M150 250 L50 150 
+            A50 50 0 1 1 150 80 
+            A50 50 0 1 1 250 150 Z"/>
+      </clipPath>
 
-      function saveAndStart() {  
-        const hour = parseInt(document.getElementById("startHour").value);  
-        const minute = parseInt(document.getElementById("startMinute").value);  
-        const day = parseInt(document.getElementById("startDay").value);  
-        const month = parseInt(document.getElementById("startMonth").value) - 1;  
-        const year = parseInt(document.getElementById("startYear").value);  
+      <!-- Sóng nước -->
+      <g clip-path="url(#clipHeart)">
+        <path class="water" id="wave1"
+              d="M0 0 Q40 20 80 0 T160 0 T240 0 T320 0 V300 H0 Z"/>
+        <path class="water2" id="wave2"
+              d="M0 -30 Q50 -10 100 -30 T200 -30 T300 -30 T400 -30 V300 H0 Z"/>
+      </g>
+    </svg>
+    <div class="percent-text" id="percent">0%</div>
+  </div>
 
-        if (isNaN(hour) || isNaN(minute) || isNaN(day) || isNaN(month) || isNaN(year)) {
-alert("Vui lòng nhập đầy đủ và đúng định dạng thời gian!");  
-          return;  
-        }  
+  <script>
+    const percent = 82; // Thay bằng % bạn muốn
+    const percentText = document.getElementById("percent");
+    const wave1 = document.getElementById("wave1");
+    const wave2 = document.getElementById("wave2");
 
-        const startDate = new Date(year, month, day, hour, minute).getTime();  
-        localStorage.setItem("startDate", startDate);  
+    let current = 0;
+    const target = percent;
 
-        displayInputs(hour, minute, day, month + 1, year);  
-        startTimer();  
-      }  
+    function updateWater(level) {
+      const y = 250 - (170 * level / 100);
+      wave1.setAttribute("transform", `translate(0, ${y})`);
+      wave2.setAttribute("transform", `translate(0, ${y})`);
+      percentText.textContent = Math.round(level) + "%";
+    }
 
-      function startTimer() {  
-        setInterval(updateDisplay, 1000);  
-      }  
+    const interval = setInterval(() => {
+      if (current >= target) {
+        clearInterval(interval);
+        return;
+      }
+      current += 0.8; // điều chỉnh tốc độ dâng lên
+      updateWater(current);
+    }, 30);
 
-      function updateDisplay() {  
-        const storedStartDate = localStorage.getItem("startDate");  
-        if (!storedStartDate) return;  
-
-        const startDate = Number(storedStartDate);  
-        const currentDate = new Date().getTime();  
-        const timeDiff = currentDate - startDate;  
-
-        const diffDays = Math.floor(timeDiff / (1000 * 60 * 60 * 24));  
-        const diffWeeks = Math.floor(diffDays / 7);  
-        const diffMonths = Math.floor(diffDays / 30);
-        const diffYears = Math.floor(diffDays / 360);
-        const remainingDays = diffDays % 7;  
-
-        const diffHours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));  
-        const diffMinutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));  
-        const diffSeconds = Math.floor((timeDiff % (1000 * 60)) / 1000);  
-
-        // Hiển thị thời gian chi tiết  +   
-        document.getElementById("detailedCount").innerHTML = `  
-          timemain: ${diffYears} năm, ${
-          diffMonths % 12
-        } tháng, ${diffWeeks} tuần, ${remainingDays} ngày  
-        `;  
-        document.getElementById("hmsCount").innerHTML = `  
-          detail: ${diffHours} giờ ${diffMinutes} phút ${diffSeconds} giây  
-        `;  
-        document.getElementById("daysCount").innerHTML = `Days: ${diffDays} ngày`; 
-      }  
-
-      function displayInputs(hour, minute, day, month, year) {  
-        document.getElementById("startHour").value = hour;  
-        document.getElementById("startMinute").value = minute;  
-        document.getElementById("startDay").value = day;  
-        document.getElementById("startMonth").value = month;  
-        document.getElementById("startYear").value = year;  
-      }  
-
-      document.addEventListener("DOMContentLoaded", () => {  
-        const storedStartDate = localStorage.getItem("startDate");  
-        if (storedStartDate) {  
-          const startDate = new Date(Number(storedStartDate));  
-          displayInputs(  
-            startDate.getHours(),  
-            startDate.getMinutes(),  
-            startDate.getDate(),  
-            startDate.getMonth() + 1,  
-            startDate.getFullYear()  
-          );  
-          startTimer();  
-        } else {  
-          displayInputs(  
-            defaultDate.getHours(),  
-            defaultDate.getMinutes(),  
-            defaultDate.getDate(),  
-            defaultDate.getMonth() + 1,  
-            defaultDate.getFullYear()  
-          );  
-        }  
-      });  
-    </script>  
-  </body>  
+    updateWater(current);
+  </script>
+</body>
 </html>
