@@ -1,111 +1,132 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-  <meta charset="UTF-8">
-  <title>Love Meter</title>
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      background: #ffe6e6;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: Arial, sans-serif;
-    }
-
-    .heart-container {
-      position: relative;
-      width: 250px;
-      height: 225px;
-    }
-
-    svg {
-      width: 100%;
-      height: 100%;
-    }
-
-    .water, .water2 {
-      fill: #ff4d6d;
-      opacity: 0.8;
-      animation: wave 4s linear infinite;
-    }
-    .water2 {
-      opacity: 0.5;
-      animation-duration: 6s;
-    }
-
-    @keyframes wave {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-160px); }
-    }
-
-    .percent-text {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 2.2em;
-      font-weight: bold;
-      color: white;
-      text-shadow: 1px 1px 6px rgba(0,0,0,0.7);
-      pointer-events: none;
-    }
-  </style>
-</head>
-<body>
-  <div class="heart-container">
-    <svg viewBox="0 0 300 270">
-      <!-- Viền trái tim -->
-      <path d="M150 250 L50 150 
-            A50 50 0 1 1 150 80 
-            A50 50 0 1 1 250 150 Z"
-            stroke="red" stroke-width="4" fill="none"/>
-
-      <!-- Mặt nạ trái tim (mask) -->
-      <clipPath id="clipHeart">
-        <path d="M150 250 L50 150 
-            A50 50 0 1 1 150 80 
-            A50 50 0 1 1 250 150 Z"/>
-      </clipPath>
-
-      <!-- Sóng nước -->
-      <g clip-path="url(#clipHeart)">
-        <path class="water" id="wave1"
-              d="M0 0 Q40 20 80 0 T160 0 T240 0 T320 0 V300 H0 Z"/>
-        <path class="water2" id="wave2"
-              d="M0 -30 Q50 -10 100 -30 T200 -30 T300 -30 T400 -30 V300 H0 Z"/>
-      </g>
-    </svg>
-    <div class="percent-text" id="percent">0%</div>
-  </div>
-
-  <script>
-    const percent = 82; // Thay bằng % bạn muốn
-    const percentText = document.getElementById("percent");
-    const wave1 = document.getElementById("wave1");
-    const wave2 = document.getElementById("wave2");
-
-    let current = 0;
-    const target = percent;
-
-    function updateWater(level) {
-      const y = 250 - (170 * level / 100);
-      wave1.setAttribute("transform", `translate(0, ${y})`);
-      wave2.setAttribute("transform", `translate(0, ${y})`);
-      percentText.textContent = Math.round(level) + "%";
-    }
-
-    const interval = setInterval(() => {
-      if (current >= target) {
-        clearInterval(interval);
-        return;
+  <head>
+    <link rel="icon" href="â.png" type="image/png" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nhật kí thay đổi ăn tếtttt 🔥</title>
+    <style>
+      .um {
+        height: 575px;
+        width: 49.5%;
       }
-      current += 0.8; // điều chỉnh tốc độ dâng lên
-      updateWater(current);
-    }, 30);
+      .um2 {
+        height: 1010px;
+        width: 49.5%;
+      }
 
-    updateWater(current);
-  </script>
-</body>
+      h1 {
+        font-weight: bold;
+        text-align: center;
+        font-size: 60px;
+        animation: tbu 6s infinite ease-in-out;
+        text-shadow: -1px 0 black, 1px 0 black, 0 1px black, 0 -1px black;
+      }
+
+      @keyframes tbu {
+        0% {
+          color: hwb(0 24% 0%);
+        }
+        25% {
+          color: #ffdf40;
+        }
+        50% {
+          color: #8aff66;
+        }
+        75% {
+          color: #53d4ff;
+        }
+        100% {
+          color: #ffffff;
+        }
+      }
+      .myDiv {
+        border: 4mm outset rgb(160, 233, 255);
+        background-color: rgb(137, 207, 242);
+        text-align: center;
+      }
+      input {
+        width: 100px;
+        background-color: black;
+        color: white;
+        border: 1px solid white;
+        border-radius: 5px;
+        padding: 10px;
+      }
+      p.m {
+        border-style: dotted;
+        background-color: rgb(255, 175, 63);
+      }
+      body {
+        background-color: #00203fff;
+        background-size: cover;
+        background-position: center;
+
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+      }
+      button {
+        width: 250px;
+        background-color: black;
+        color: white;
+        border: 1px solid white;
+        border-radius: 5px;
+        padding: 10px;
+      }
+
+      body *:not(h1) {
+        font-size: 30px;
+        color: #adefd1ff;
+        font-weight: bold;
+        text-shadow: -1px 0 black, 1px 0 black, 0 1px black, 0 -1px black;
+      }
+      .hm {
+        font-weight: bold;
+        font-size: 45px;
+        animation: lvm 6s infinite ease-in-out;
+        text-shadow: -1px 0 black, 1px 0 black, 0 1px black, 0 -1px black;
+      }
+
+      @keyframes lvm {
+        0% {
+          color: hwb(0 38% 0%);
+        }
+        25% {
+          color: #ffc340;
+        }
+        50% {
+          color: #fad954;
+        }
+        75% {
+          color: #ffff53;
+        }
+        100% {
+          color: #ff5050;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="myDiv">
+      <header>
+        <h1>Nhật kí thay đổi ăn tếtttt 🔥</h1>
+      </header>
+</div>
+    <div class="hm">•19/11</div>
+    <blockquote>
+      <h2>
+       Tính ra là tập đc cx gần 1 tháng r mà lười ghi lại nên thoi quyết định lấy hnay làm ngày bắt đầu
+       nay thì tôi tập cx đc
+       35 hít đất
+       30 gập bụng
+       30 nâng tạ
+       coi như ngày đầu v th ngủ 11h30
+      </h2>
+    </blockquote>
+    <div style="text-align: left">
+      <img src="1911.jpg" alt="river" style="max-width: 50%" />
+    </div>
+  </body>
 </html>
